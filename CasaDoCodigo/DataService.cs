@@ -12,12 +12,15 @@ namespace CasaDoCodigo
     {
         private readonly ApplicationContext contexto;
         private readonly IProdutoRepository produtoRepository;
+        private readonly ICategoriaRepository categoriaRepository;
 
         public DataService(ApplicationContext contexto,
-            IProdutoRepository produtoRepository)
+            IProdutoRepository produtoRepository,
+            ICategoriaRepository categoriaRepository)
         {
             this.contexto = contexto;
             this.produtoRepository = produtoRepository;
+            this.categoriaRepository = categoriaRepository;
         }
 
         public async Task InicializaDB()
@@ -25,7 +28,10 @@ namespace CasaDoCodigo
             await contexto.Database.MigrateAsync();
 
             List<Livro> livros = await GetLivros();
-
+            foreach (var livro in livros)
+            {
+                await categoriaRepository.SaveCategoria(livro.Categoria);
+            }
             await produtoRepository.SaveProdutos(livros);
         }
 
