@@ -11,7 +11,10 @@ namespace CasaDoCodigo.Repositories
         public CategoriaRepository(ApplicationContext contexto) : base(contexto)
         {
         }
-        public IList<Categoria> GetCategorias() => dbSet.ToList();
+        public IList<Categoria> GetCategorias()
+        {
+            return dbSet.ToList();
+        }
 
         public async Task SaveCategorias(List<Categoria> categorias)
         {
