@@ -12,6 +12,10 @@ namespace CasaDoCodigo.Repositories
         {
         }
 
+        public Categoria GetCategoria(string nomeCategoria)
+        {
+            return dbSet.Where(categoria => categoria.Nome == nomeCategoria).SingleOrDefault();
+        }
         public async Task SaveCategoria(string nomeCategoria)
         {
             if (!dbSet.Where(p => p.Nome == nomeCategoria).Any())

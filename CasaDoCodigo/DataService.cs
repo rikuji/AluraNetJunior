@@ -28,10 +28,12 @@ namespace CasaDoCodigo
             await contexto.Database.MigrateAsync();
 
             List<Livro> livros = await GetLivros();
+
             foreach (var livro in livros)
             {
                 await categoriaRepository.SaveCategoria(livro.Categoria);
             }
+            
             await produtoRepository.SaveProdutos(livros);
         }
 
