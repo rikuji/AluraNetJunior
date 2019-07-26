@@ -11,16 +11,16 @@ namespace CasaDoCodigo.Repositories
         public CategoriaRepository(ApplicationContext contexto) : base(contexto)
         {
         }
+        public IList<Categoria> GetCategorias() => dbSet.ToList();
 
-        public Categoria GetCategoria(string nomeCategoria)
+        public async Task SaveCategorias(List<Categoria> categorias)
         {
-            return dbSet.Where(categoria => categoria.Nome == nomeCategoria).SingleOrDefault();
-        }
-        public async Task SaveCategoria(string nomeCategoria)
-        {
-            if (!dbSet.Where(p => p.Nome == nomeCategoria).Any())
+            foreach (var item in categorias)
             {
-                dbSet.Add(new Categoria(nomeCategoria));
+                if (!dbSet.Where(p => p.Id == item.Id).Any())
+                {
+                    dbSet.Add(new Categoria(item.Id, item.Nome));
+                }
             }
             await contexto.SaveChangesAsync();
         }

@@ -12,15 +12,12 @@ namespace CasaDoCodigo
     {
         private readonly ApplicationContext contexto;
         private readonly IProdutoRepository produtoRepository;
-        private readonly ICategoriaRepository categoriaRepository;
 
         public DataService(ApplicationContext contexto,
-            IProdutoRepository produtoRepository,
-            ICategoriaRepository categoriaRepository)
+            IProdutoRepository produtoRepository )
         {
             this.contexto = contexto;
             this.produtoRepository = produtoRepository;
-            this.categoriaRepository = categoriaRepository;
         }
 
         public async Task InicializaDB()
@@ -29,11 +26,6 @@ namespace CasaDoCodigo
 
             List<Livro> livros = await GetLivros();
 
-            foreach (var livro in livros)
-            {
-                await categoriaRepository.SaveCategoria(livro.Categoria);
-            }
-            
             await produtoRepository.SaveProdutos(livros);
         }
 

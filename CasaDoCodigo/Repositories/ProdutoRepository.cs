@@ -25,11 +25,22 @@ namespace CasaDoCodigo.Repositories
         {
             foreach (var livro in livros)
             {
+                Categoria categoria;
+
+                if (contexto.Set<Categoria>().Where(p => p.Nome == livro.Categoria).FirstOrDefault() is Categoria _categoria)
+                {
+                    categoria = _categoria;
+                }
+                else
+                {
+                    categoria = new Categoria(livro.Categoria);
+                    contexto.Set<Categoria>().Add(categoria);
+                    contexto.SaveChanges();
+                }
+
                 if (!dbSet.Where(p => p.Codigo == livro.Codigo).Any())
                 {
-                    Categoria categoria = categoriaRepository.GetCategoria(livro.Categoria);
-                    
-                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria));
+                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria.Id));
                 }
             }
             await contexto.SaveChangesAsync();

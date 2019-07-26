@@ -8,7 +8,7 @@ namespace CasaDoCodigo.Repositories
 {
     public interface ICategoriaRepository
     {
-        Task SaveCategoria(string nomeCategoria);
-        Categoria GetCategoria(string nomeCategoria);
+        Task SaveCategorias(List<Categoria> categorias);
+        IList<Categoria> GetCategorias();
     }
 }

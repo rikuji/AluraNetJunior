@@ -28,13 +28,14 @@ namespace CasaDoCodigo.Models
         [Required]
         public decimal Preco { get; private set; }
         public Categoria Categoria { get; set; }
+        public int CategoriaId { get; set; }
 
-        public Produto(string codigo, string nome, decimal preco, Categoria categoria)
+        public Produto(string codigo, string nome, decimal preco, int categoriaId)
         {
             this.Codigo = codigo;
             this.Nome = nome;
             this.Preco = preco;
-            this.Categoria = categoria;
+            this.CategoriaId = categoriaId;
         }
     }
 
@@ -137,14 +138,20 @@ namespace CasaDoCodigo.Models
     public class Categoria : BaseModel
     {
         public string Nome { get; set; }
+        public Categoria(int id, string nome)
+        {
+            this.Id = id;
+            this.Nome = nome;
+        }
 
         public Categoria(string nome)
         {
-            Nome = nome;
+            this.Nome = nome;
         }
 
         public Categoria()
         {
+
         }
     }
 }
