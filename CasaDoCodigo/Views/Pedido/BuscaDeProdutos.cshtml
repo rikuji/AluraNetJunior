@@ -6,22 +6,24 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            <h2>Buscar produtos</h2>
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" name="pesquisa" class="form-control input-lg" placeholder="categoria ou produto" id="Pesquisa" value="" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
+        <form asp-action="buscaDeProdutos" method="get">
+            <div class="col-md-4">
+                <h2>Buscar produtos</h2>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Categoria ou Produto" id="Pesquisa"
+                               asp-for="@Model.Pesquisa">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
-
 @foreach (var categoria in Model.Categorias)
 {
 

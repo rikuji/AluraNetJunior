@@ -55,13 +55,19 @@ namespace CasaDoCodigo.Controllers
 
             return View(pedido.Cadastro);
         }
-        public IActionResult BuscaDeProdutos()
+        public IActionResult BuscaDeProdutos(BuscaDeProdutosViewModel viewModel)
         {
-            var produtos = produtoRepository.GetProdutos();
-            var categorias = categoriaRepository.GetCategorias();
+            if (String.IsNullOrWhiteSpace(viewModel.Pesquisa))
+            {
+                viewModel.Produtos = produtoRepository.GetProdutos();
+                viewModel.Categorias = categoriaRepository.GetCategorias();
+                return View(viewModel);
+            }
 
-            BuscaDeProdutosViewModel buscaDeProdutosViewModel = new BuscaDeProdutosViewModel(categorias, produtos);
-            return View(buscaDeProdutosViewModel);
+            viewModel.Produtos = produtoRepository.GetProdutos(viewModel.Pesquisa);
+            viewModel.Categorias = categoriaRepository.GetCategorias();
+            return View(viewModel);
+
         }
 
         [HttpPost]
